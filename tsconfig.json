@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // or "es6", "es2025", etc.
+    "lib": ["esnext", "dom"], // include necessary libraries
+    "module": "commonjs",
+    "strict": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "esModuleInterop": true
+  }
+}
