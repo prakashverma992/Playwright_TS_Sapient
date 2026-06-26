@@ -12,6 +12,9 @@ export class CheckoutPage extends BasePage {
     private readonly orderCompleteHeader: Locator;
     private readonly orderCompleteText: Locator;
     private readonly summaryTotalLabel: Locator;
+    public readonly itemPrice: Locator;
+    public readonly taxPrice: Locator;
+    public readonly totalPrice: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -25,6 +28,9 @@ export class CheckoutPage extends BasePage {
         this.orderCompleteHeader = page.locator('.complete-header');
         this.orderCompleteText = page.locator('.complete-text');
         this.summaryTotalLabel = page.locator('.summary_total_label');
+        this.itemPrice = page.locator('.summary_subtotal_label');
+        this.taxPrice = page.locator('.summary_tax_label');
+        this.totalPrice = page.locator('.summary_total_label');
     }
 
     async verifyCheckoutInformationPageDisplayed(): Promise<void> {

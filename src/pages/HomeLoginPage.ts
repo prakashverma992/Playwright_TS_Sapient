@@ -5,20 +5,23 @@ export class HomeLoginPage extends BasePage {
     private readonly usernameInput: Locator;
     private readonly passwordInput: Locator;
     private readonly loginButton: Locator;
-    private readonly errorMessage: Locator;
     private readonly loginLogo: Locator;
+    private readonly menuButton: Locator;
+    private readonly logoutLink: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.usernameInput = page.locator('[data-test="username"]');
-        this.passwordInput = page.locator('[data-test="password"]');
-        this.loginButton = page.locator('[data-test="login-button"]');
-        this.errorMessage = page.locator('[data-test="error"]');
-        this.loginLogo = page.locator('.login_logo');
+        this.usernameInput = page.getByRole('textbox', { name: 'Username' });
+        this.passwordInput = page.getByRole('textbox', { name: 'Password' });
+        this.loginButton = page.locator('#login-button');
+        this.loginLogo = page.getByRole('heading', { name: 'Swag Labs' });
+        this.menuButton = page.locator('#react-burger-menu-btn');
+        this.logoutLink = page.locator('[data-test="logout-sidebar-link"]');
     }
 
     async verifyLoginPageDisplayed(): Promise<void> {
         await expect(this.loginLogo).toBeVisible();
+        await expect(this.loginLogo).toHaveText('Swag Labs');
         await expect(this.usernameInput).toBeVisible();
         await expect(this.passwordInput).toBeVisible();
         await expect(this.loginButton).toBeVisible();
@@ -30,8 +33,9 @@ export class HomeLoginPage extends BasePage {
         await this.loginButton.click();
     }
 
-    async verifyLoginErrorMessage(expectedMessage: string): Promise<void> {
-        await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toContainText(expectedMessage);
+    async logout() {
+        await this.menuButton.click();
+        await this.logoutLink.click();
     }
+
 }

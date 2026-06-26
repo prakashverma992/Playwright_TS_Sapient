@@ -30,4 +30,9 @@ export class BasePage {
     async verifyUrlContains(text: string): Promise<void> {
         await expect(this.page).toHaveURL(new RegExp(text));
     }
+
+    async takeScreenshot(text: string): Promise<void> {
+        await this.page.screenshot({ path: `screenshots/${text}.png`, fullPage: true });
+    }
+
 }

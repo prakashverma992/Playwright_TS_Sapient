@@ -14,7 +14,7 @@ export const users = {
 };
 
 export const checkoutUser = {
-    firstName: 'standard_user',
-    lastName: '',
+    firstName: 'John',
+    lastName: 'Doe',
     postalCode: '101010'
 };
