@@ -14,7 +14,11 @@ test.describe('Sauce Demo Cart Tests', () => {
 
     test('Verify the login functionality of Sauce Demo', async ({ productPage }) => {
         await productPage.verifyProductsPageDisplayed();
+
+        // Visual validation of successful login
+        await productPage.waitForLoad();
         await productPage.takeScreenshot('Successful_Login');
+        await productPage.assertScreenshot('Successful_Login');
     });
 
     test('Verify user can add multiple items from cart', async ({ cartPage, productPage, homeLoginPage }) => {
@@ -27,6 +31,11 @@ test.describe('Sauce Demo Cart Tests', () => {
         await cartPage.verifyProductAvailableInCart('Sauce Labs Backpack');
         await cartPage.verifyProductAvailableInCart('Sauce Labs Bike Light');
         await cartPage.verifyCartItemCount(2);
+
+        // Visual validation of multiple items added to cart
+        await productPage.waitForLoad();
+        await productPage.takeScreenshot('Multiple_Items_Added_to_Cart');
+        await productPage.assertScreenshot('Multiple_Items_Added_to_Cart');
 
         await homeLoginPage.logout();
     });
@@ -41,18 +50,30 @@ test.describe('Sauce Demo Cart Tests', () => {
         await cartPage.verifyProductAvailableInCart('Sauce Labs Backpack');
         await cartPage.verifyProductAvailableInCart('Sauce Labs Bike Light');
 
+        // Visual validation of multiple items added to cart before removal
+        await productPage.takeScreenshot('Multiple_Items_Added_to_Cart_Before_Removal');
+        await productPage.assertScreenshot('Multiple_Items_Added_to_Cart_Before_Removal');
+
         await cartPage.removeProductFromCart('Sauce Labs Backpack');
         await cartPage.verifyProductRemovedFromCart('Sauce Labs Backpack');
 
         await cartPage.verifyProductAvailableInCart('Sauce Labs Bike Light');
         await cartPage.verifyCartItemCount(1);
 
+        // Visual validation of item removed from cart
+        await productPage.waitForLoad();
+        await productPage.takeScreenshot('Item_Removed_from_Cart');
+        await productPage.assertScreenshot('Item_Removed_from_Cart');
+
         await homeLoginPage.logout();
     });
 
     test('Verify products are sorted by Price Low to High', async ({ productPage, homeLoginPage }) => {
         await productPage.sortProductsBy(SORT_OPTIONS.PRICE_LOW_TO_HIGH);
+        await productPage.waitForLoad();
+
         await productPage.takeScreenshot('products_sorted_by_price_low_to_high');
+
         await productPage.verifyProductsSortedByPriceLowToHigh();
         await homeLoginPage.logout();
     });
@@ -79,6 +100,11 @@ test.describe('Sauce Demo Cart Tests', () => {
         await checkoutPage.clickContinue();
         await checkoutPage.verifyCheckoutOverviewPageDisplayed();
 
+        // Visual validation of Checkout Overview page
+        await productPage.waitForLoad();
+        await productPage.takeScreenshot('Checkout_Overview_Page');
+        await productPage.assertScreenshot('Checkout_Overview_Page');
+
         // Verify Order Summary Calculations
         const itemTotalText = await checkoutPage.itemPrice.innerText();
         const taxText = await checkoutPage.taxPrice.innerText();
@@ -95,6 +121,12 @@ test.describe('Sauce Demo Cart Tests', () => {
 
         await checkoutPage.clickFinish();
         await checkoutPage.verifyOrderCompletedSuccessfully();
+
+        // Visual validation of Order Completed Successfully page
+        await productPage.waitForLoad();
+        await productPage.takeScreenshot('Order_Completed_Successfully');
+        await productPage.assertScreenshot('Order_Completed_Successfully');
+
         await homeLoginPage.logout();
     });
 

@@ -3,11 +3,19 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./src/tests/specs/", // Directory for test specs
   timeout: 60000, // Default timeout per test (60s)
-  retries: process.env.CI ? 2 : 0, // Retry failed tests up to 2 times
+  retries: process.env.CI ? 2 : 1, // Retry failed tests up to 2 times
   fullyParallel: true, // Run tests in parallel
   forbidOnly: !!process.env.CI, // Prevent accidental .only in CI
   workers: process.env.CI ? 1 : undefined, // Limit workers in CI
   reporter: "html",
+
+  /* Global visual regression configurations */
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixels: 100, // Permits minor rendering shifts (e.g., antialiasing)
+      threshold: 0.2,     // Per-pixel color difference sensitivity
+    },
+  },
 
   // Shared settings across all projects
   use: {

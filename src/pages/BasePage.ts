@@ -11,6 +11,10 @@ export class BasePage {
         await this.page.goto(url);
     }
 
+    async waitForLoad(): Promise<void> {
+        await this.page.waitForLoadState('load');
+    }
+
     async clickElement(locator: Locator): Promise<void> {
         await locator.click();
     }
@@ -33,6 +37,10 @@ export class BasePage {
 
     async takeScreenshot(text: string): Promise<void> {
         await this.page.screenshot({ path: `screenshots/${text}.png`, fullPage: true });
+    }
+
+    async assertScreenshot(text: string): Promise<void> {
+        await expect(this.page).toHaveScreenshot(`screenshots/${text}.png`, { fullPage: true });
     }
 
 }
