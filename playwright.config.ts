@@ -12,7 +12,7 @@ export default defineConfig({
   // Shared settings across all projects
   use: {
     baseURL: "https://www.saucedemo.com",
-    headless: false, // Set to true for headless mode
+    headless: true, // Set to true for headless mode
     trace: "on-first-retry", // Collect trace on first retry
     screenshot: "on", // Capture screenshot on failure
     video: "off",
